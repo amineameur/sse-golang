@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE with Golang</title>
+</head>
+<body>
+    <h1>Server-Sent Events Demo</h1>
+    <div id="stream"></div>
+
+    <script>
+        const eventSource = new EventSource("http://localhost:8080/events-streaming");
+
+        eventSource.onmessage = function(event) {
+             const streamDiv = document.getElementById("stream");
+            const newMessage = document.createElement("p");
+            newMessage.textContent = `Received data: ${event.data}`;
+            streamDiv.appendChild(newMessage);
+        };
+
+        eventSource.onerror = function() {
+            console.log("Error: Connection closed or failed.");
+        };
+    </script>
+</body>
+</html>
